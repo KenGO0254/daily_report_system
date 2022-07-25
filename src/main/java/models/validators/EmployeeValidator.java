@@ -3,6 +3,8 @@ package models.validators;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import actions.views.EmployeeView;
 import constants.MessageConst;
 import services.EmployeeService;
@@ -13,7 +15,7 @@ import services.EmployeeService;
  *
  */
 public class EmployeeValidator {
-
+	protected HttpServletRequest request;
 	/**
 	 * 従業員インスタンスの各項目についてバリデーションを行う
 	 * @param service 呼び出し元Serviceクラスのインスタンス

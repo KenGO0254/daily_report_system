@@ -34,10 +34,10 @@ public class EmployeeView {
 	private Integer adminFlag;
 
 	//登録日時
-	private LocalDateTime createAt;
+	private LocalDateTime createdAt;
 
 	//更新日時
-	private LocalDateTime updateAt;
+	private LocalDateTime updatedAt;
 
 	//削除されたかどうか(現役：0, 削除済み：1)
 	private Integer deleteFlag;

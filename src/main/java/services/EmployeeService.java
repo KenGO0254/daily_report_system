@@ -100,8 +100,8 @@ public class EmployeeService extends ServiceBase {
 
 		//登録日時、更新日時は現在時刻を設定する
 		LocalDateTime now = LocalDateTime.now();
-		ev.setCreateAt(now);
-		ev.setUpdateAt(now);
+		ev.setCreatedAt(now);
+		ev.setUpdatedAt(now);
 
 		//登録内容のバリデーションを行う
 		List<String> errors = EmployeeValidator.validate(this, ev, true, true);
@@ -151,7 +151,7 @@ public class EmployeeService extends ServiceBase {
 
 		//更新日時に現在時刻を設定する
 		LocalDateTime today = LocalDateTime.now();
-		savedEmp.setUpdateAt(today);
+		savedEmp.setUpdatedAt(today);
 
 		//更新内容についてバリデーションを行う
 		List<String> errors = EmployeeValidator.validate(this, savedEmp, validateCode, validatePass);
@@ -174,7 +174,7 @@ public class EmployeeService extends ServiceBase {
 		EmployeeView savedEmp = findOne(id);
 		//更新日時に現在時刻を設定する
 		LocalDateTime today = LocalDateTime.now();
-		savedEmp.setUpdateAt(today);
+		savedEmp.setUpdatedAt(today);
 
 		//論理削除フラグを立てる
 		savedEmp.setDeleteFlag(JpaConst.EMP_DEL_TRUE);

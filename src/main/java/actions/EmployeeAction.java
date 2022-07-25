@@ -115,9 +115,6 @@ public class EmployeeAction extends ActionBase {
 
 				//新規登録画面を再表示
 				forward(ForwardConst.FW_EMP_NEW);
-
-				System.out.println(getRequestParam(AttributeConst.EMP_PASS));
-				System.out.println(pepper);
 			} else {
 				//登録中にエラーがなかった場合
 
@@ -223,9 +220,9 @@ public class EmployeeAction extends ActionBase {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void destroy() throws ServletException, IOException{
+	public void destroy() throws ServletException, IOException {
 		//CSRF対策 tokenのチェック
-		if(checkToken()) {
+		if (checkToken()) {
 			//idを条件に従業員データを論理削除する
 			service.destroy(toNumber(getRequestParam(AttributeConst.EMP_ID)));
 
@@ -236,28 +233,5 @@ public class EmployeeAction extends ActionBase {
 			redirect(ForwardConst.ACT_EMP, ForwardConst.CMD_INDEX);
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

@@ -3,6 +3,8 @@ package utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import javax.xml.bind.DatatypeConverter;
+
 public class EncryptUtil {
 
 	//生のパスワード文字列とpepper文字列を連結した文字列をSHA-256関数でハッシュ化して返却する
@@ -14,6 +16,7 @@ public class EncryptUtil {
 			String password = plainPass + pepper;
 			try {
 				bytes = MessageDigest.getInstance("SHA-256").digest(password.getBytes());
+				ret = DatatypeConverter.printHexBinary(bytes);
 			}catch(NoSuchAlgorithmException ex) {
 
 			}
