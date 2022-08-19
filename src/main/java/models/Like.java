@@ -34,13 +34,13 @@ public class Like {
 	 * 従業員のid
 	 */
 	@Column(name = "employee_id", nullable = false)
-	private Integer employee_id;
+	private Integer employeeId;
 
 	/**
 	 * 日報のid
 	 */
 	@Column(name = "report_id", nullable = false)
-	private Integer report_id;
+	private Integer reportId;
 
 	/**
 	 * 登録日時
