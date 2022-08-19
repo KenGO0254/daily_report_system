@@ -7,11 +7,13 @@ import java.util.List;
 import javax.servlet.ServletException;
 
 import actions.views.EmployeeView;
+import actions.views.LikeView;
 import actions.views.ReportView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
+import services.LikeService;
 import services.ReportService;
 
 /**
@@ -20,6 +22,7 @@ import services.ReportService;
 public class ReportAction extends ActionBase {
 
 	private ReportService service;
+	private LikeService likeService;
 
 	/**
 	 * メソッドを実行する
@@ -28,10 +31,12 @@ public class ReportAction extends ActionBase {
 	public void process() throws ServletException, IOException {
 
 		service = new ReportService();
+		likeService = new LikeService();
 
 		//メソッド実行
 		invoke();
 		service.close();
+		likeService.close();
 	}
 
 	/**
@@ -69,13 +74,13 @@ public class ReportAction extends ActionBase {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void entryNew() throws ServletException, IOException{
-		putRequestScope(AttributeConst.TOKEN, getTokenId());	//CDRF対策用
+	public void entryNew() throws ServletException, IOException {
+		putRequestScope(AttributeConst.TOKEN, getTokenId()); //CDRF対策用
 
 		//日報情報の空インスタンスに、日報の日付＝今日の日付を設定する
 		ReportView rv = new ReportView();
 		rv.setReportDate(LocalDate.now());
-		putRequestScope(AttributeConst.REPORT, rv);	//日付のみ設定済みの日報インスタンス
+		putRequestScope(AttributeConst.REPORT, rv); //日付のみ設定済みの日報インスタンス
 
 		//新規登録画面を表示
 		forward(ForwardConst.FW_REP_NEW);
@@ -86,16 +91,16 @@ public class ReportAction extends ActionBase {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void create() throws ServletException, IOException{
+	public void create() throws ServletException, IOException {
 		//CSRF対策 tokenのチェック
-		if(checkToken()) {
+		if (checkToken()) {
 
 			//日報の日付が入力されていなければ、今日の日付を設定
 			LocalDate day = null;
-			if(getRequestParam(AttributeConst.REP_DATE) == null
+			if (getRequestParam(AttributeConst.REP_DATE) == null
 					|| getRequestParam(AttributeConst.REP_DATE).equals("")) {
 				day = LocalDate.now();
-			}else {
+			} else {
 				day = LocalDate.parse(getRequestParam(AttributeConst.REP_DATE));
 			}
 
@@ -116,16 +121,16 @@ public class ReportAction extends ActionBase {
 			//日報情報登録
 			List<String> errors = service.create(rv);
 
-			if(errors.size() > 0) {
+			if (errors.size() > 0) {
 				//登録中にエラーがあった場合
 
-				putRequestScope(AttributeConst.TOKEN, getTokenId());	//CSRF対策用token
-				putRequestScope(AttributeConst.REPORT, rv);	//入力された日報情報
-				putRequestScope(AttributeConst.ERR, errors);	//エラーのリスト
+				putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用token
+				putRequestScope(AttributeConst.REPORT, rv); //入力された日報情報
+				putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
 
 				//新規登録画面を再表示
 				forward(ForwardConst.FW_REP_NEW);
-			}else {
+			} else {
 				//登録中にエラーがなかった場合
 
 				//セッションに登録完了のフラッシュメッセージを設定
@@ -142,14 +147,14 @@ public class ReportAction extends ActionBase {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void show() throws ServletException, IOException{
+	public void show() throws ServletException, IOException {
 		//idを条件に日報データを取得する
 		ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
 
-		if(rv == null) {
+		if (rv == null) {
 			//該当の日報データが存在しない場合はエラー画面を表示
 			forward(ForwardConst.FW_ERR_UNKNOWN);
-		}else {
+		} else {
 
 			putRequestScope(AttributeConst.REPORT, rv); //取得した日報データ
 
@@ -163,19 +168,19 @@ public class ReportAction extends ActionBase {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void edit() throws ServletException, IOException{
+	public void edit() throws ServletException, IOException {
 
 		//idを条件に日報データを取得する
 		ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
 
 		//セッションからログイン中の従業員情報を取得
-		EmployeeView ev = (EmployeeView)getSessionScope(AttributeConst.LOGIN_EMP);
+		EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
 
-		if(rv == null || ev.getId() != rv.getEmployee().getId()) {
+		if (rv == null || ev.getId() != rv.getEmployee().getId()) {
 			//該当の日報データが存在しない、または
 			//ログインしている従業員が日報の作成者出ない場合はエラー画面を表示
 			forward(ForwardConst.FW_ERR_UNKNOWN);
-		}else {
+		} else {
 			putRequestScope(AttributeConst.TOKEN, getTokenId());//CSRF対策用トークン
 			putRequestScope(AttributeConst.REPORT, rv);//取得した日報データ
 
@@ -189,9 +194,9 @@ public class ReportAction extends ActionBase {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void update() throws ServletException, IOException{
+	public void update() throws ServletException, IOException {
 		//CSRF対策 tokenのチェック
-		if(checkToken()) {
+		if (checkToken()) {
 			//idを条件に日報データを取得する
 			ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
 
@@ -202,7 +207,7 @@ public class ReportAction extends ActionBase {
 
 			//日報データを更新する
 			List<String> errors = service.update(rv);
-			if(errors.size() > 0) {
+			if (errors.size() > 0) {
 				//更新中にエラーが発生した場合
 
 				putRequestScope(AttributeConst.TOKEN, getTokenId());//CSRF対策用トークン
@@ -211,7 +216,7 @@ public class ReportAction extends ActionBase {
 
 				//編集画面を再表示
 				forward(ForwardConst.FW_REP_EDIT);
-			}else {
+			} else {
 				//更新中にエラーがなかった場合
 
 				//セッションに更新完了のフラッシュメッセージを設定
@@ -223,38 +228,37 @@ public class ReportAction extends ActionBase {
 		}
 	}
 
-	public void likeCount() throws ServletException, IOException{
+	public void likeCount() throws ServletException, IOException {
 		//idを条件に日報データを取得する
 		ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
 
+		//セッションからログイン中の従業員情報を取得
+		EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
+
+		//いいねした人一覧に登録する内容を格納
+		LikeView lv = new LikeView(
+				null,
+				ev.getId(),
+				rv.getId(),
+				null,
+				null);
+
 		//いいね数を1つ加算する
-		rv.setLikeCount(rv.getLikeCount()+1);
+		rv.setLikeCount(rv.getLikeCount() + 1);
+
+		//いいねした人一覧にデータを登録する
+		likeService.create(lv);
 
 		//日報データを更新する
-		List<String> errors = service.update(rv);
-		if(errors.size() > 0) {
-			//更新中にエラーが発生した場合
+		service.update(rv);
 
-			//一覧画面にリダイレクト
-			redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
-		}else {
-			//更新中にエラーがなかった場合
+		//セッションに「いいねしました。」のフラッシュメッセージを設定
+		putSessionScope(AttributeConst.FLUSH, MessageConst.I_LIKE_COUNT.getMessage());
 
-			//セッションに「いいねしました。」のフラッシュメッセージを設定
-			putSessionScope(AttributeConst.FLUSH, MessageConst.I_LIKE_COUNT.getMessage());
-
-			//一覧画面にリダイレクト
-			redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
-		}
+		//一覧画面にリダイレクト
+		redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
 	}
 }
-
-
-
-
-
-
-
 
 
 
