@@ -46,7 +46,13 @@ public enum AttributeConst {
 	REP_ID("id"),
 	REP_DATE("report_date"),
 	REP_TITLE("title"),
-	REP_CONTENT("content");
+	REP_CONTENT("content"),
+
+	//いいね管理
+	LIKE("like"),
+	LIKES("likes"),
+	LIKE_REP_ID("report_id"),
+	LIKE_EMP_ID("employee_id");
 
 	private final String text;
 	private final Integer i;
