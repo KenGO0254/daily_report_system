@@ -25,19 +25,6 @@ public class LikeService extends ServiceBase {
 	}
 
 	/**
-	 * 指定した日報にいいねした人一覧のデータの件数を取得し、返却する
-	 * @param reportId
-	 * @return いいねテーブルにあるデータの件数
-	 */
-	public long countAllLikes(Integer reportId) {
-		long count = (long)em.createNamedQuery(JpaConst.Q_LIKE_COUNT_REGISTERED_BY_CODE, Long.class)
-				.setParameter(JpaConst.JPQL_PARM_REPORT_ID, reportId)
-				.getSingleResult();
-
-		return count;
-	}
-
-	/**
 	 * idを条件にデータを1件取得する
 	 * @param id
 	 * @return 取得データのインスタンス
