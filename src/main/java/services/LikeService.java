@@ -50,11 +50,7 @@ public class LikeService extends ServiceBase {
 	 * 「この日報にいいねする」リンクが押された時に従業員のidと日報のidを元にデータを1件作成し、いいねした人一覧に登録する
 	 * @param lv いいねした人一覧への登録内容
 	 */
-	public void create(LikeView lv, int report_id, int employee_id){
-
-		//従業員のidと日報のidを登録
-		lv.setReportId(report_id);
-		lv.setEmployeeId(employee_id);
+	public void create(LikeView lv){
 
 		//登録日時、更新日時に現在時刻を設定
 		LocalDateTime now = LocalDateTime.now();
