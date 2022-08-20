@@ -258,6 +258,26 @@ public class ReportAction extends ActionBase {
 		//一覧画面にリダイレクト
 		redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
 	}
+
+	public void likes() throws ServletException, IOException {
+
+		//指定されたページ数の一覧画面に表示する日報データを取得
+		int page = getPage();
+		List<ReportView> reports = service.getAllPerPage(page);
+
+		LikeView likes = likeService.getLikePerPage(toNumber(request.getParameter("id")));
+
+		//全日報データの件数を取得
+		long reportsCount = service.countAll();
+
+		putRequestScope(AttributeConst.LIKES, likes); //取得した日報データ
+		putRequestScope(AttributeConst.REP_COUNT, reportsCount); //全ての日報データの件数
+		putRequestScope(AttributeConst.PAGE, page); //ページ数
+		putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
+
+		//一覧画面を表示
+		forward(ForwardConst.FW_LIKE_INDEX);
+	}
 }
 
 
