@@ -1,11 +1,9 @@
 package services;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import actions.views.LikeConverter;
 import actions.views.LikeView;
-import constants.JpaConst;
 import models.Like;
 
 public class LikeService extends ServiceBase {
@@ -15,13 +13,10 @@ public class LikeService extends ServiceBase {
 	 * @param page ページ数
 	 * @return 表示するデータのリスト
 	 */
-	public List<LikeView> getPerPage(int page){
-		List<Like> likes = em.createNamedQuery(JpaConst.Q_LIKE_GET_ALL_MINE, Like.class)
-				.setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
-				.setMaxResults(JpaConst.ROW_PER_PAGE)
-				.getResultList();
+	public LikeView getLikePerPage(int report_id){
+		Like l = findOneInternal(report_id);
 
-		return LikeConverter.toViewList(likes);
+		return LikeConverter.toView(l);
 	}
 
 	/**
