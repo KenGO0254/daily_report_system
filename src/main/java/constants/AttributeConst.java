@@ -51,6 +51,7 @@ public enum AttributeConst {
 	//いいね管理
 	LIKE("like"),
 	LIKES("likes"),
+	LIKE_COUNT("likes_count"),
 	LIKE_REP_ID("report_id"),
 	LIKE_EMP_ID("employee_id");
 

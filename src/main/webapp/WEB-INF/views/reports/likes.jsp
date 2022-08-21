@@ -34,8 +34,8 @@
 	</table>
 
 	<div id="pagenation">
-		(全 ${reports_count} 件) <br />
-		<c:forEach var="i" begin="1" end="${((reports_count -1) / maxRow) + 1}" step="1">
+		(全 ${likes_count} 件) <br />
+		<c:forEach var="i" begin="1" end="${((likes_count -1) / maxRow) + 1}" step="1">
 			<c:choose>
 				<c:when test="${i == page}">
 					<c:out value="${i}" />&nbsp;

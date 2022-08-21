@@ -10,7 +10,12 @@ import models.Like;
 
 public class LikeService extends ServiceBase {
 
-
+	/**
+	 * 指定した日報のidを利用していいねした人の情報を取得する
+	 * @param reportId
+	 * @param page
+	 * @return
+	 */
 	public List<LikeView> getLikeEmp(int reportId, int page){
 		@SuppressWarnings("unchecked")
 		List<Like> likes = em.createNamedQuery("getEmpId")
@@ -22,14 +27,18 @@ public class LikeService extends ServiceBase {
 	}
 
 	/**
-	 * 指定されたいいね一覧を画面に表示するデータを取得してLikeViewのリストで返却する
-	 * @param page ページ数
-	 * @return 表示するデータのリスト
+	 * いいねした人の人数を取得する
+	 * @param likes 取得したいいね情報
+	 * @return いいねした人の人数
 	 */
-	public LikeView getLikePerPage(int report_id){
-		Like l = findOneInternal(report_id);
+	public long countAllLike(List<LikeView> likes) {
+		long count = 0;
 
-		return LikeConverter.toView(l);
+		for(LikeView l : likes) {
+			count++;
+		}
+
+		return count;
 	}
 
 	/**

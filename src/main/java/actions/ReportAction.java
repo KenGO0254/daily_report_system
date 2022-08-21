@@ -275,11 +275,14 @@ public class ReportAction extends ActionBase {
 		int page = getPage();
 		List<LikeView> likes = likeService.getLikeEmp(toNumber(request.getParameter("id")), page);
 
+		//いいねした人の人数を取得
+		long likesCount = likeService.countAllLike(likes);
+
 		//全日報データの件数を取得
         long reportsCount = service.countAll();
 
 		putRequestScope(AttributeConst.LIKES, likes); //取得した日報データ
-		putRequestScope(AttributeConst.REP_COUNT, reportsCount); //全ての日報データの件数
+		putRequestScope(AttributeConst.LIKE_COUNT, likesCount); //全ての日報データの件数
 		putRequestScope(AttributeConst.PAGE, page); //ページ数
 		putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
 
