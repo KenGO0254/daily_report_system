@@ -228,6 +228,11 @@ public class ReportAction extends ActionBase {
 		}
 	}
 
+	/**
+	 * 「この日報にいいねする」リンクが押された時の処理
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void likeCount() throws ServletException, IOException {
 		//idを条件に日報データを取得する
 		ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
@@ -259,16 +264,19 @@ public class ReportAction extends ActionBase {
 		redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
 	}
 
+	/**
+	 * いいねした人一覧画面を表示する
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void likes() throws ServletException, IOException {
 
-		//指定されたページ数の一覧画面に表示する日報データを取得
+		//指定した日報にいいねした人の情報をいいねテーブルから取得
 		int page = getPage();
-		List<ReportView> reports = service.getAllPerPage(page);
-
-		LikeView likes = likeService.getLikePerPage(toNumber(request.getParameter("id")));
+		List<LikeView> likes = likeService.getLikeEmp(toNumber(request.getParameter("id")), page);
 
 		//全日報データの件数を取得
-		long reportsCount = service.countAll();
+        long reportsCount = service.countAll();
 
 		putRequestScope(AttributeConst.LIKES, likes); //取得した日報データ
 		putRequestScope(AttributeConst.REP_COUNT, reportsCount); //全ての日報データの件数

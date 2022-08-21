@@ -1,12 +1,25 @@
 package services;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import actions.views.LikeConverter;
 import actions.views.LikeView;
+import constants.JpaConst;
 import models.Like;
 
 public class LikeService extends ServiceBase {
+
+
+	public List<LikeView> getLikeEmp(int reportId, int page){
+		@SuppressWarnings("unchecked")
+		List<Like> likes = em.createNamedQuery("getEmpId")
+				.setParameter("report_id", reportId)
+				.setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
+				.setMaxResults(JpaConst.ROW_PER_PAGE)
+				.getResultList();
+		return LikeConverter.toViewList(likes);
+	}
 
 	/**
 	 * 指定されたいいね一覧を画面に表示するデータを取得してLikeViewのリストで返却する

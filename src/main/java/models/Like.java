@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import constants.JpaConst;
@@ -16,11 +18,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Table(name = JpaConst.TABLE_LIKE_COUNT)
+@NamedQueries({
+		@NamedQuery(
+				name = "getEmpId",
+				query = "SELECT l FROM Like AS l WHERE l.reportId = :" + "report_id" + " ORDER BY l.id DESC")
+})
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 public class Like {
 
 	/**
