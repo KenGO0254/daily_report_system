@@ -278,9 +278,6 @@ public class ReportAction extends ActionBase {
 		//いいねした人の人数を取得
 		long likesCount = likeService.countAllLike(likes);
 
-		//全日報データの件数を取得
-        long reportsCount = service.countAll();
-
 		putRequestScope(AttributeConst.LIKES, likes); //取得した日報データ
 		putRequestScope(AttributeConst.LIKE_COUNT, likesCount); //全ての日報データの件数
 		putRequestScope(AttributeConst.PAGE, page); //ページ数
