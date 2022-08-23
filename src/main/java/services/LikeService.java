@@ -17,12 +17,12 @@ public class LikeService extends ServiceBase {
 	 * @return
 	 */
 	public List<LikeView> getLikeEmp(int reportId, int page){
-		@SuppressWarnings("unchecked")
-		List<Like> likes = em.createNamedQuery("getEmpId")
+		List<Like> likes = em.createNamedQuery("getEmpId", Like.class)
 				.setParameter("report_id", reportId)
 				.setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
 				.setMaxResults(JpaConst.ROW_PER_PAGE)
 				.getResultList();
+
 		return LikeConverter.toViewList(likes);
 	}
 
@@ -31,12 +31,10 @@ public class LikeService extends ServiceBase {
 	 * @param likes 取得したいいね情報
 	 * @return いいねした人の人数
 	 */
-	public long countAllLike(List<LikeView> likes) {
-		long count = 0;
-
-		for(LikeView l : likes) {
-			count++;
-		}
+	public long countByReportId(int reportId) {
+		long count = (long)em.createNamedQuery("countAllLike", Long.class)
+				.setParameter("report_id", reportId)
+				.getSingleResult();
 
 		return count;
 	}

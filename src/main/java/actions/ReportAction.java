@@ -276,7 +276,7 @@ public class ReportAction extends ActionBase {
 		List<LikeView> likes = likeService.getLikeEmp(toNumber(request.getParameter("id")), page);
 
 		//いいねした人の人数を取得
-		long likesCount = likeService.countAllLike(likes);
+		long likesCount = likeService.countByReportId(toNumber(request.getParameter("id")));
 
 		putRequestScope(AttributeConst.LIKES, likes); //取得した日報データ
 		putRequestScope(AttributeConst.LIKE_COUNT, likesCount); //全ての日報データの件数

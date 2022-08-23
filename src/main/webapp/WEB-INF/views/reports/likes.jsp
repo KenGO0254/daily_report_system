@@ -7,6 +7,7 @@
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
+<c:set var="commLike" value="${ForwardConst.CMD_LIKES.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
 	<c:param name="content">
@@ -33,7 +34,7 @@
 		</tbody>
 	</table>
 
-	<div id="pagenation">
+	<div id="pagination">
 		(全 ${likes_count} 件) <br />
 		<c:forEach var="i" begin="1" end="${((likes_count -1) / maxRow) + 1}" step="1">
 			<c:choose>
@@ -41,7 +42,7 @@
 					<c:out value="${i}" />&nbsp;
 				</c:when>
 				<c:otherwise>
-					<a href="<c:url value='?action=${actRep}&command=${commIdx}&page=${i}' />"><c:out value="${i}" /></a>&nbsp;
+					<a href="<c:url value='?action=${actRep}&command=${commLike}&page=${i}' />"><c:out value="${i}" /></a>&nbsp;
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>

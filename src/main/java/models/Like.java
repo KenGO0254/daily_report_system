@@ -23,7 +23,10 @@ import lombok.Setter;
 @NamedQueries({
 		@NamedQuery(
 				name = "getEmpId",
-				query = "SELECT l FROM Like AS l WHERE l.reportId = :" + "report_id" + " ORDER BY l.id DESC")
+				query = "SELECT l FROM Like AS l WHERE l.reportId = :" + "report_id" + " ORDER BY l.id DESC"),
+		@NamedQuery(
+				name = "countAllLike",
+				query = "SELECT COUNT(l) FROM Like AS l WHERE l.reportId = :report_id")
 })
 @Entity
 @Getter
