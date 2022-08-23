@@ -243,7 +243,7 @@ public class ReportAction extends ActionBase {
 		//いいねした人一覧に登録する内容を格納
 		LikeView lv = new LikeView(
 				null,
-				ev.getId(),
+				ev,
 				rv.getId(),
 				null,
 				null);
