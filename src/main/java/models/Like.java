@@ -26,7 +26,10 @@ import lombok.Setter;
 				query = "SELECT l FROM Like AS l WHERE l.reportId = :" + "report_id" + " ORDER BY l.id DESC"),
 		@NamedQuery(
 				name = "countAllLike",
-				query = "SELECT COUNT(l) FROM Like AS l WHERE l.reportId = :report_id")
+				query = "SELECT COUNT(l) FROM Like AS l WHERE l.reportId = :report_id"),
+		@NamedQuery(
+				name = "countMatchId",
+				query = "SELECT COUNT(l) FROM Like AS l WHERE l.reportId = :report_id AND l.employee = :employee")
 })
 @Entity
 @Getter
@@ -47,7 +50,7 @@ public class Like {
 	 * いいねした従業員
 	 */
 	@ManyToOne
-	@JoinColumn(name = "employee_id", nullable = false)
+	@JoinColumn(name = JpaConst.LIKE_COL_EMP, nullable = false)
 	private Employee employee;
 
 	/**

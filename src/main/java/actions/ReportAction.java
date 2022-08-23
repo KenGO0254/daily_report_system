@@ -151,12 +151,19 @@ public class ReportAction extends ActionBase {
 		//idを条件に日報データを取得する
 		ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
 
+		//ログインしてる従業員の情報を取得
+		EmployeeView loginEmployee = (EmployeeView)getSessionScope(AttributeConst.LOGIN_EMP);
+
+		//従業員のidと指定した日報のidの両方を持つレコードがいいねした人一覧に何件あるか取得
+		long count = likeService.countMatchId(toNumber(getRequestParam(AttributeConst.REP_ID)), loginEmployee);
+
 		if (rv == null) {
 			//該当の日報データが存在しない場合はエラー画面を表示
 			forward(ForwardConst.FW_ERR_UNKNOWN);
 		} else {
 
 			putRequestScope(AttributeConst.REPORT, rv); //取得した日報データ
+			putRequestScope(AttributeConst.LIKE_COUNT, count); //いいねした件数
 
 			//詳細画面の表示
 			forward(ForwardConst.FW_REP_SHOW);
@@ -273,15 +280,15 @@ public class ReportAction extends ActionBase {
 
 		//指定した日報にいいねした人の情報をいいねテーブルから取得
 		int page = getPage();
-		List<LikeView> likes = likeService.getLikePerPage(toNumber(request.getParameter("id")), page);
+		List<LikeView> likes = likeService.getLikePerPage(toNumber(getRequestParam(AttributeConst.REP_ID)), page);
 
 		//いいねした人の人数を取得
-		long likesCount = likeService.countByReportId(toNumber(request.getParameter("id")));
+		long likesCount = likeService.countByReportId(toNumber(getRequestParam(AttributeConst.REP_ID)));
 
 		putRequestScope(AttributeConst.LIKES, likes); //取得した日報データ
 		putRequestScope(AttributeConst.LIKE_COUNT, likesCount); //全ての日報データの件数
 		putRequestScope(AttributeConst.PAGE, page); //ページ数
-		putRequestScope(AttributeConst.LIKE_REP_ID, request.getParameter("id"));//指定した日報のid
+		putRequestScope(AttributeConst.LIKE_REP_ID, getRequestParam(AttributeConst.REP_ID));//指定した日報のid
 		putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
 
 		//一覧画面を表示

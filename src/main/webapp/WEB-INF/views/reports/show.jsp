@@ -51,7 +51,9 @@
 				</p>
 			</c:when>
 			<c:otherwise>
-				<a href="<c:url value='?action=${actRep}&command=${commLkCnt}&id=${report.id}' />">この日報にいいねする</a>
+				<c:if test="${likes_count == 0}">
+					<a href="<c:url value='?action=${actRep}&command=${commLkCnt}&id=${report.id}' />">この日報にいいねする</a>
+				</c:if>
 			</c:otherwise>
 		</c:choose>
 		<p>

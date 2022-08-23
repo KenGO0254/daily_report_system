@@ -3,6 +3,8 @@ package services;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import actions.views.EmployeeConverter;
+import actions.views.EmployeeView;
 import actions.views.LikeConverter;
 import actions.views.LikeView;
 import constants.JpaConst;
@@ -34,6 +36,20 @@ public class LikeService extends ServiceBase {
 	public long countByReportId(int reportId) {
 		long count = (long)em.createNamedQuery("countAllLike", Long.class)
 				.setParameter("report_id", reportId)
+				.getSingleResult();
+
+		return count;
+	}
+
+	/**
+	 * ログイン中の従業員情報といいねした日報のidを持つレコードがいいねした人一覧に何件あるか取得する
+	 * @param reportId, employee
+	 * @return レコードの件数
+	 */
+	public long countMatchId(int reportId, EmployeeView employee) {
+		long count = (long)em.createNamedQuery("countMatchId", Long.class)
+				.setParameter("report_id", reportId)
+				.setParameter("employee",  EmployeeConverter.toModel(employee))
 				.getSingleResult();
 
 		return count;
