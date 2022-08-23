@@ -273,7 +273,7 @@ public class ReportAction extends ActionBase {
 
 		//指定した日報にいいねした人の情報をいいねテーブルから取得
 		int page = getPage();
-		List<LikeView> likes = likeService.getLikeEmp(toNumber(request.getParameter("id")), page);
+		List<LikeView> likes = likeService.getLikePerPage(toNumber(request.getParameter("id")), page);
 
 		//いいねした人の人数を取得
 		long likesCount = likeService.countByReportId(toNumber(request.getParameter("id")));

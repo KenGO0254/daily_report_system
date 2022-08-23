@@ -16,7 +16,7 @@ public class LikeService extends ServiceBase {
 	 * @param page
 	 * @return
 	 */
-	public List<LikeView> getLikeEmp(int reportId, int page){
+	public List<LikeView> getLikePerPage(int reportId, int page){
 		List<Like> likes = em.createNamedQuery("getEmpId", Like.class)
 				.setParameter("report_id", reportId)
 				.setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
