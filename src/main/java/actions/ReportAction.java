@@ -281,6 +281,7 @@ public class ReportAction extends ActionBase {
 		putRequestScope(AttributeConst.LIKES, likes); //取得した日報データ
 		putRequestScope(AttributeConst.LIKE_COUNT, likesCount); //全ての日報データの件数
 		putRequestScope(AttributeConst.PAGE, page); //ページ数
+		putRequestScope(AttributeConst.LIKE_REP_ID, request.getParameter("id"));//指定した日報のid
 		putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
 
 		//一覧画面を表示
