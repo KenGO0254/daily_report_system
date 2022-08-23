@@ -15,7 +15,7 @@ public class LikeConverter {
 	public static Like toModel(LikeView lv) {
 		return new Like(
 				lv.getId(),
-				lv.getEmployeeId(),
+				EmployeeConverter.toModel(lv.getEmployee()),
 				lv.getReportId(),
 				lv.getCreatedAt(),
 				lv.getUpdatedAt());
@@ -27,13 +27,13 @@ public class LikeConverter {
 	 * @return LikeViewのインスタンス
 	 */
 	public static LikeView toView(Like l) {
-		if(l == null) {
+		if (l == null) {
 			return null;
 		}
 
 		return new LikeView(
 				l.getId(),
-				l.getEmployeeId(),
+				EmployeeConverter.toView(l.getEmployee()),
 				l.getReportId(),
 				l.getCreatedAt(),
 				l.getUpdatedAt());
@@ -44,10 +44,10 @@ public class LikeConverter {
 	 * @param list DTOモデルのリスト
 	 * @return Viewモデルのリスト
 	 */
-	public static List<LikeView> toViewList(List<Like> list){
+	public static List<LikeView> toViewList(List<Like> list) {
 		List<LikeView> evs = new ArrayList<>();
 
-		for(Like l : list) {
+		for (Like l : list) {
 			evs.add(toView(l));
 		}
 
@@ -61,28 +61,10 @@ public class LikeConverter {
 	 */
 	public static void copyViewToModel(Like l, LikeView lv) {
 		l.setId(lv.getId());
-		l.setEmployeeId(lv.getEmployeeId());
+		l.setEmployee(EmployeeConverter.toModel(lv.getEmployee()));
 		l.setReportId(lv.getReportId());
 		l.setCreatedAt(lv.getCreatedAt());
 		l.setUpdatedAt(lv.getUpdatedAt());
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

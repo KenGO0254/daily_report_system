@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -39,10 +41,11 @@ public class Like {
 	private Integer id;
 
 	/**
-	 * 従業員のid
+	 * いいねした従業員
 	 */
-	@Column(name = JpaConst.LIKE_COL_EMP, nullable = false)
-	private Integer employeeId;
+	@ManyToOne
+	@JoinColumn(name = "employee_id", nullable = false)
+	private Employee employee;
 
 	/**
 	 * 日報のid

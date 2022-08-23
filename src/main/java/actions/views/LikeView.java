@@ -18,9 +18,9 @@ public class LikeView {
 	private Integer id;
 
 	/**
-	 * 従業員のid
+	 * いいねした従業員
 	 */
-	private Integer employeeId;
+	private EmployeeView employee;
 
 	/**
 	 * 日報のid
