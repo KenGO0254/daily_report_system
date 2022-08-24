@@ -22,14 +22,14 @@ import lombok.Setter;
 @Table(name = JpaConst.TABLE_LIKE_COUNT)
 @NamedQueries({
 		@NamedQuery(
-				name = "getEmpId",
-				query = "SELECT l FROM Like AS l WHERE l.reportId = :" + "report_id" + " ORDER BY l.id DESC"),
+				name = JpaConst.Q_LIKE_GET_EMP_ID,
+				query = JpaConst.Q_LIKE_GET_EMP_ID_DEF),
 		@NamedQuery(
-				name = "countAllLike",
-				query = "SELECT COUNT(l) FROM Like AS l WHERE l.reportId = :report_id"),
+				name = JpaConst.Q_LIKE_COUNT_ALL_LIKE,
+				query = JpaConst.Q_LIKE_COUNT_ALL_LIKE_DEF),
 		@NamedQuery(
-				name = "countMatchId",
-				query = "SELECT COUNT(l) FROM Like AS l WHERE l.reportId = :report_id AND l.employee = :employee")
+				name = JpaConst.Q_LIKE_COUNT_MATCH_ID,
+				query = JpaConst.Q_LIKE_COUNT_MATCH_ID_DEF)
 })
 @Entity
 @Getter

@@ -19,8 +19,8 @@ public class LikeService extends ServiceBase {
 	 * @return
 	 */
 	public List<LikeView> getLikePerPage(int reportId, int page){
-		List<Like> likes = em.createNamedQuery("getEmpId", Like.class)
-				.setParameter("report_id", reportId)
+		List<Like> likes = em.createNamedQuery(JpaConst.Q_LIKE_GET_EMP_ID, Like.class)
+				.setParameter(JpaConst.JPQL_PARM_REPORT_ID, reportId)
 				.setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
 				.setMaxResults(JpaConst.ROW_PER_PAGE)
 				.getResultList();
@@ -34,8 +34,8 @@ public class LikeService extends ServiceBase {
 	 * @return いいねした人の人数
 	 */
 	public long countByReportId(int reportId) {
-		long count = (long)em.createNamedQuery("countAllLike", Long.class)
-				.setParameter("report_id", reportId)
+		long count = (long)em.createNamedQuery(JpaConst.Q_LIKE_COUNT_ALL_LIKE, Long.class)
+				.setParameter(JpaConst.JPQL_PARM_REPORT_ID, reportId)
 				.getSingleResult();
 
 		return count;
@@ -47,9 +47,9 @@ public class LikeService extends ServiceBase {
 	 * @return レコードの件数
 	 */
 	public long countMatchId(int reportId, EmployeeView employee) {
-		long count = (long)em.createNamedQuery("countMatchId", Long.class)
-				.setParameter("report_id", reportId)
-				.setParameter("employee",  EmployeeConverter.toModel(employee))
+		long count = (long)em.createNamedQuery(JpaConst.Q_LIKE_COUNT_MATCH_ID, Long.class)
+				.setParameter(JpaConst.JPQL_PARM_REPORT_ID, reportId)
+				.setParameter(JpaConst.JPQL_PARM_EMPLOYEE,  EmployeeConverter.toModel(employee))
 				.getSingleResult();
 
 		return count;
