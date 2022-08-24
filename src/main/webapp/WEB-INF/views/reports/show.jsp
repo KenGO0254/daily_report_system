@@ -51,7 +51,7 @@
 				</p>
 			</c:when>
 			<c:otherwise>
-				<c:if test="${likes_count == 0}">
+				<c:if test="${likes_count < 1}">
 					<a href="<c:url value='?action=${actRep}&command=${commLkCnt}&id=${report.id}' />">この日報にいいねする</a>
 				</c:if>
 			</c:otherwise>
