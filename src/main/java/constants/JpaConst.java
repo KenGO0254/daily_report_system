@@ -51,6 +51,16 @@ public interface JpaConst {
 	String LIKE_COL_CREATED_AT = "created_at"; //登録日時
 	String LIKE_COL_UPDATED_AT = "updated_at"; //更新日時
 
+	//タイムラインテーブル
+	String TABLE_TIME_LINE = "timeLine";
+
+	//タイムラインテーブルカラム
+	String TIME_LINE_ID = "id";
+	String TIME_LINE_LOGIN_EMP = "login_employee_id";
+	String TIME_LINE_FOLLOW_EMP = "follow_employee_id";
+	String TIME_LINE_CREATED_AT = "created_at";
+	String TIME_LINE_UPDATED_AT = "updated_at";
+
 	//Entity名
 	String ENTITY_EMP = "employee"; //従業員
 	String ENTITY_REP = "report"; //日報
