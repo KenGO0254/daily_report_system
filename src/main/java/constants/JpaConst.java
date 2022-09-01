@@ -118,4 +118,12 @@ public interface JpaConst {
 	//ログイン中の従業員が指定した日報にいいねした回数を取得
 	String Q_LIKE_COUNT_MATCH_ID = "countMatchId";
 	String Q_LIKE_COUNT_MATCH_ID_DEF = "SELECT COUNT(l) FROM Like AS l WHERE l.reportId = :" + JPQL_PARM_REPORT_ID + " AND l.employee = :" + JPQL_PARM_EMPLOYEE;
+
+	//ログイン中の従業員がフォローしている従業員の日報情報を降順で取得
+	String Q_TIME_LINE_GET_FOLLOW_REP = "getFollowRep";
+	String Q_TIME_LINE_GET_FOLLOW_REP_DEF = "SELECT tl FROM TimeLine AS tl WHERE tl.loginEmployee = :" + JPQL_PARM_EMPLOYEE;
+
+	//ログイン中の従業員がフォローした従業員の日報の件数を取得
+	String Q_TIME_LINE_COUNT_FOLLOW_REP = "countFollowRep";
+	String Q_TIME_LINE_COUNT_FOLLOW_REP_DEF = "SELECT COUNT(tl) FROM TimeLine AS tl WHERE tl.loginEmployee = :" + JPQL_PARM_EMPLOYEE;
 }
