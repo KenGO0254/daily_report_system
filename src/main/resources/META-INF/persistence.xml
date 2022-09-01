@@ -5,6 +5,7 @@
 		<class>models.Employee</class>
 		<class>models.Report</class>
 		<class>models.Like</class>
+		<class>models.TimeLine</class>
 		<properties>
 			<property name="javax.persistence.jdbc.password" value="reppass"/>
 			<property name="javax.persistence.jdbc.user" value="repuser"/>
