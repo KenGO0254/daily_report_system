@@ -7,6 +7,7 @@
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commEdt" value="${ForwardConst.CMD_EDIT.getValue()}" />
 <c:set var="commLkCnt" value="${ForwardConst.CMD_LIKE_COUNT.getValue()}" />
+<c:set var="commFollow" value="${ForwardConst.CMD_FOLLOW.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
 	<c:param name="content">
@@ -51,6 +52,7 @@
 				</p>
 			</c:when>
 			<c:otherwise>
+				<a href="<c:url value='?action=${actRep}&command=${commFollow}&id=${report.employee.id}' />">この日報の作成者をフォローする</a>
 				<c:if test="${likes_count < 1}">
 					<a href="<c:url value='?action=${actRep}&command=${commLkCnt}&id=${report.id}' />">この日報にいいねする</a>
 				</c:if>

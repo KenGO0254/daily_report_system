@@ -13,16 +13,20 @@ import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
+import services.EmployeeService;
 import services.LikeService;
 import services.ReportService;
+import services.TimeLineService;
 
 /**
  * 日報に関する処理を行うActionクラス
  */
 public class ReportAction extends ActionBase {
 
+	private EmployeeService empService;
 	private ReportService service;
 	private LikeService likeService;
+	private TimeLineService timeLineService;
 
 	/**
 	 * メソッドを実行する
@@ -30,13 +34,16 @@ public class ReportAction extends ActionBase {
 	@Override
 	public void process() throws ServletException, IOException {
 
+		empService = new EmployeeService();
 		service = new ReportService();
 		likeService = new LikeService();
+		timeLineService = new TimeLineService();
 
 		//メソッド実行
 		invoke();
 		service.close();
 		likeService.close();
+		timeLineService.close();
 	}
 
 	/**
@@ -152,7 +159,7 @@ public class ReportAction extends ActionBase {
 		ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
 
 		//ログインしてる従業員の情報を取得
-		EmployeeView loginEmployee = (EmployeeView)getSessionScope(AttributeConst.LOGIN_EMP);
+		EmployeeView loginEmployee = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
 
 		//従業員のidと指定した日報のidの両方を持つレコードがいいねした人一覧に何件あるか取得
 		long count = likeService.countMatchId(toNumber(getRequestParam(AttributeConst.REP_ID)), loginEmployee);
@@ -294,19 +301,44 @@ public class ReportAction extends ActionBase {
 		//一覧画面を表示
 		forward(ForwardConst.FW_LIKE_INDEX);
 	}
+
+	/**
+	 * 従業員をフォローする
+	 */
+	public void followEmp() throws ServletException, IOException {
+		//ログイン中の従業員データを取得
+		EmployeeView loginEmployee = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
+
+		//日報を作成した従業員のidからViewモデルを作成
+		EmployeeView followEmployee = empService.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
+
+		//ログイン中の従業員とフォローした従業員の情報をタイムラインテーブルに登録
+		timeLineService.create(loginEmployee, followEmployee);
+
+		//タイムラインページを表示(開発中なので日報一覧に遷移)
+		redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
+	}
+
+	/**
+	 * タイムライン画面を表示する
+	 */
+	public void timeLine() throws ServletException, IOException {
+		//ログイン中の従業員データを取得
+		EmployeeView loginEmployee = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
+
+		//ログイン中の従業員がフォローした従業員の日報データを、指定されたページ数の一覧画面に表示する
+		int page = getPage();
+		List<ReportView> reports = timeLineService.getFollowPerPage(loginEmployee, page);
+
+		//ログイン中の従業員がフォローした日報のデータの件数を取得
+		long followReportsCount = timeLineService.countFollowRep(loginEmployee);
+
+		putRequestScope(AttributeConst.REPORTS, reports);//取得した日報データ
+		putRequestScope(AttributeConst.PAGE, page);//ページ数
+		putRequestScope(AttributeConst.REP_COUNT, followReportsCount);//ログイン中の従業員がフォローした従業員が作成した日報の数
+		putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE);//1ページに表示するレコードの数
+
+		//一覧画面を表示
+		forward(ForwardConst.FW_TIME_LINE_INDEX);
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
