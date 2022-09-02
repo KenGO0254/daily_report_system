@@ -28,7 +28,7 @@ import lombok.Setter;
 @NamedQueries({
 	@NamedQuery(
 			name = JpaConst.Q_TIME_LINE_GET_FOLLOW_REP,
-			query = JpaConst.Q_TIME_LINE_COUNT_FOLLOW_REP_DEF),
+			query = JpaConst.Q_TIME_LINE_GET_FOLLOW_REP_DEF),
 	@NamedQuery(
 			name = JpaConst.Q_TIME_LINE_COUNT_FOLLOW_REP,
 			query = JpaConst.Q_TIME_LINE_COUNT_FOLLOW_REP_DEF)
