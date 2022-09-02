@@ -43,6 +43,19 @@ public class TimeLineService extends ServiceBase{
 	}
 
 	/**
+	 * 表示した日報を作成した従業員をフォローしているか確認する
+	 * (日報を作成した従業員のidとログイン中の従業員のidの両方を持つレコードがタイムラインテーブルに何件あるか取得して返却)
+	 */
+	public long countFollowEmp(EmployeeView loginEmployee, EmployeeView followEmployee) {
+		long count = em.createNamedQuery(JpaConst.Q_TIME_LINE_COUNT_FOLLOW_EMP, Long.class)
+				.setParameter(JpaConst.JPQL_PARM_LOGIN_EMPLOYEE, EmployeeConverter.toModel(loginEmployee))
+				.setParameter(JpaConst.JPQL_PARM_FOLLOW_EMPLOYEE, EmployeeConverter.toModel(followEmployee))
+				.getSingleResult();
+
+		return count;
+	}
+
+	/**
 	 * 画面で「この日報の作成者をフォローする」リンクが押された時にタイムラインテーブルにデータを登録する
 	 */
 	public void create(EmployeeView loginEmployee, EmployeeView followEmployee) {

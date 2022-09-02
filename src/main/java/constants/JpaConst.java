@@ -71,6 +71,8 @@ public interface JpaConst {
 	String JPQL_PARM_PASSWORD = "password"; //パスワード
 	String JPQL_PARM_EMPLOYEE = "employee"; //従業員
 	String JPQL_PARM_REPORT_ID = "report_id";//日報にいいねした従業員のid
+	String JPQL_PARM_LOGIN_EMPLOYEE = "login_employee";//ログイン中の従業員
+	String JPQL_PARM_FOLLOW_EMPLOYEE = "follow_employee";//フォローされた従業員
 
 	//NameQueryのnameとquery
 	//全ての従業員をidの降順に取得する
@@ -126,4 +128,8 @@ public interface JpaConst {
 	//ログイン中の従業員がフォローした従業員の日報の件数を取得
 	String Q_TIME_LINE_COUNT_FOLLOW_REP = "countFollowRep";
 	String Q_TIME_LINE_COUNT_FOLLOW_REP_DEF = "SELECT COUNT(r) FROM Report AS r, TimeLine AS tl WHERE r.employee = tl.followEmployee AND tl.loginEmployee = :" + JPQL_PARM_EMPLOYEE + " ORDER BY r.id DESC";
+
+	//表示している日報を作成した従業員のidとログイン中の従業員のidを持つレコードの件数を取得
+	String Q_TIME_LINE_COUNT_FOLLOW_EMP = "countFollowEmp";
+	String Q_TIME_LINE_COUNT_FOLLOW_EMP_DEF = "SELECT COUNT(tl) FROM TimeLine AS tl WHERE tl.loginEmployee = :" + JPQL_PARM_LOGIN_EMPLOYEE + " AND tl.followEmployee = :" + JPQL_PARM_FOLLOW_EMPLOYEE;
 }

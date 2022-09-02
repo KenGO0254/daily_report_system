@@ -168,9 +168,12 @@ public class ReportAction extends ActionBase {
 			//該当の日報データが存在しない場合はエラー画面を表示
 			forward(ForwardConst.FW_ERR_UNKNOWN);
 		} else {
+			//ログイン中の従業員のidとフォローされた従業員のidが一致するレコードが何件あるか取得
+			long follow = timeLineService.countFollowEmp(loginEmployee, rv.getEmployee());
 
 			putRequestScope(AttributeConst.REPORT, rv); //取得した日報データ
 			putRequestScope(AttributeConst.LIKE_COUNT, count); //いいねした件数
+			putRequestScope(AttributeConst.FOLLOW_COUNT, follow);//フォローの件数
 
 			//詳細画面の表示
 			forward(ForwardConst.FW_REP_SHOW);

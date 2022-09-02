@@ -53,7 +53,10 @@ public enum AttributeConst {
 	LIKES("likes"),
 	LIKE_COUNT("likes_count"),
 	LIKE_REP_ID("report_id"),
-	LIKE_EMP_ID("employee_id");
+	LIKE_EMP_ID("employee_id"),
+
+	//フォロー管理
+	FOLLOW_COUNT("follows_count");
 
 	private final String text;
 	private final Integer i;
