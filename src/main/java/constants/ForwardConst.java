@@ -26,6 +26,7 @@ public enum ForwardConst {
 	CMD_LIKE_COUNT("likeCount"),
 	CMD_LIKES("likes"),
 	CMD_FOLLOW("followEmp"),
+	CMD_TIME_LINE("timeLine"),
 
 	//jsp
 	FW_ERR_UNKNOWN("error/unknown"),
