@@ -315,8 +315,8 @@ public class ReportAction extends ActionBase {
 		//ログイン中の従業員とフォローした従業員の情報をタイムラインテーブルに登録
 		timeLineService.create(loginEmployee, followEmployee);
 
-		//タイムラインページを表示(開発中なので日報一覧に遷移)
-		redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
+		//タイムラインページを表示
+		redirect(ForwardConst.ACT_REP, ForwardConst.CMD_TIME_LINE);
 	}
 
 	/**
