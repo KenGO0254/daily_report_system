@@ -11,6 +11,7 @@ import actions.views.TimeLineConverter;
 import actions.views.TimeLineView;
 import constants.JpaConst;
 import models.Report;
+import models.TimeLine;
 
 public class TimeLineService extends ServiceBase{
 	/**
@@ -53,6 +54,12 @@ public class TimeLineService extends ServiceBase{
 				.getSingleResult();
 
 		return count;
+	}
+
+	public void unFollowEmp(EmployeeView loginEmployee, EmployeeView followEmployee) {
+		em.createNamedQuery(JpaConst.Q_TIME_LINE_UNFOLLOW, TimeLine.class)
+		.setParameter(JpaConst.JPQL_PARM_LOGIN_EMPLOYEE, loginEmployee)
+		.setParameter(JpaConst.JPQL_PARM_FOLLOW_EMPLOYEE, followEmployee);
 	}
 
 	/**
