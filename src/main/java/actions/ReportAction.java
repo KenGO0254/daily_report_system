@@ -318,7 +318,30 @@ public class ReportAction extends ActionBase {
 		//ログイン中の従業員とフォローした従業員の情報をタイムラインテーブルに登録
 		timeLineService.create(loginEmployee, followEmployee);
 
+		//セッションスコープにフラッシュメッセージを設定
+		putSessionScope(AttributeConst.FLUSH, MessageConst.I_FOLLOW);
+
 		//タイムラインページを表示
+		redirect(ForwardConst.ACT_REP, ForwardConst.CMD_TIME_LINE);
+	}
+
+	/**
+	 * フォロー解除する
+	 */
+	public void unFollow() throws ServletException, IOException {
+		//ログイン中の従業員データを取得
+		EmployeeView loginEmployee = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
+
+		//日報を作成した従業員のidからViewモデルを作成
+		EmployeeView followEmployee = empService.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
+
+		//フォロー解除の処理を追加
+		timeLineService.unFollowEmp(loginEmployee, followEmployee);
+
+		//セッションスコープにフラッシュメッセージを設定
+		putSessionScope(AttributeConst.FLUSH, MessageConst.I_UNFOLLOW);
+
+		//タイムラインページに遷移
 		redirect(ForwardConst.ACT_REP, ForwardConst.CMD_TIME_LINE);
 	}
 
@@ -340,6 +363,13 @@ public class ReportAction extends ActionBase {
 		putRequestScope(AttributeConst.PAGE, page);//ページ数
 		putRequestScope(AttributeConst.REP_COUNT, followReportsCount);//ログイン中の従業員がフォローした従業員が作成した日報の数
 		putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE);//1ページに表示するレコードの数
+
+		//フラッシュメッセージをリクエストスコープに移して削除
+		String flush = getSessionScope(AttributeConst.FLUSH);
+		if(flush != null) {
+			putRequestScope(AttributeConst.FLUSH, flush);
+			removeSessionScope(AttributeConst.FLUSH);
+		}
 
 		//一覧画面を表示
 		forward(ForwardConst.FW_TIME_LINE_INDEX);
