@@ -8,6 +8,7 @@
 <c:set var="commEdt" value="${ForwardConst.CMD_EDIT.getValue()}" />
 <c:set var="commLkCnt" value="${ForwardConst.CMD_LIKE_COUNT.getValue()}" />
 <c:set var="commFollow" value="${ForwardConst.CMD_FOLLOW.getValue()}" />
+<c:set var="commUnFollow" value="${ForwardConst.CMD_UNFOLLOW.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
 	<c:param name="content">
@@ -55,9 +56,12 @@
 				<c:if test="${likes_count == 0}">
 					<a href="<c:url value='?action=${actRep}&command=${commLkCnt}&id=${report.id}' />">この日報にいいねする</a><br />
 				</c:if>
-				<c:if test="${follows_count == 0}">
+				<c:when test="${follows_count == 0}">
 					<a href="<c:url value='?action=${actRep}&command=${commFollow}&id=${report.employee.id}' />">この日報の作成者をフォローする</a>
-				</c:if>
+				</c:when>
+				<c:otherwise>
+					<a href="<c:url value='?action=${actRep}&command=${commUnFollow}&id=${report.employee.id}' />">フォロー解除する</a>
+				</c:otherwise>
 			</c:otherwise>
 		</c:choose>
 		<p>
