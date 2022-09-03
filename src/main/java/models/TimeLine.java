@@ -34,7 +34,10 @@ import lombok.Setter;
 			query = JpaConst.Q_TIME_LINE_COUNT_FOLLOW_REP_DEF),
 	@NamedQuery(
 			name = JpaConst.Q_TIME_LINE_COUNT_FOLLOW_EMP,
-			query = JpaConst.Q_TIME_LINE_COUNT_FOLLOW_EMP_DEF)
+			query = JpaConst.Q_TIME_LINE_COUNT_FOLLOW_EMP_DEF),
+	@NamedQuery(
+			name = JpaConst.Q_TIME_LINE_UNFOLLOW,
+			query = JpaConst.Q_TIME_LINE_UNFOLLOW_DEF)
 })
 @Getter //全てのクラスフィールドについてgetterを自動生成する(Lombok)
 @Setter //全てのクラスフィールドについてsetterを自動生成する(Lombok)

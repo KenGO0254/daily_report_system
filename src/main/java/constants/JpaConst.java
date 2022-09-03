@@ -132,4 +132,8 @@ public interface JpaConst {
 	//表示している日報を作成した従業員のidとログイン中の従業員のidを持つレコードの件数を取得
 	String Q_TIME_LINE_COUNT_FOLLOW_EMP = "countFollowEmp";
 	String Q_TIME_LINE_COUNT_FOLLOW_EMP_DEF = "SELECT COUNT(tl) FROM TimeLine AS tl WHERE tl.loginEmployee = :" + JPQL_PARM_LOGIN_EMPLOYEE + " AND tl.followEmployee = :" + JPQL_PARM_FOLLOW_EMPLOYEE;
+
+	//従業員のフォロー状態を解除する
+	String Q_TIME_LINE_UNFOLLOW = "unFollow";
+	String Q_TIME_LINE_UNFOLLOW_DEF = "DELETE FROM TimeLine AS tl WHERE tl.loginEmployee = :" + JPQL_PARM_LOGIN_EMPLOYEE + " AND tl.followEmployee = :" + JPQL_PARM_FOLLOW_EMPLOYEE;
 }
