@@ -56,12 +56,14 @@
 				<c:if test="${likes_count == 0}">
 					<a href="<c:url value='?action=${actRep}&command=${commLkCnt}&id=${report.id}' />">この日報にいいねする</a><br />
 				</c:if>
-				<c:when test="${follows_count == 0}">
-					<a href="<c:url value='?action=${actRep}&command=${commFollow}&id=${report.employee.id}' />">この日報の作成者をフォローする</a>
-				</c:when>
-				<c:otherwise>
-					<a href="<c:url value='?action=${actRep}&command=${commUnFollow}&id=${report.employee.id}' />">フォロー解除する</a>
-				</c:otherwise>
+				<c:choose>
+					<c:when test="${follows_count == 0}">
+						<a href="<c:url value='?action=${actRep}&command=${commFollow}&id=${report.employee.id}' />">この日報の作成者をフォローする</a>
+					</c:when>
+					<c:otherwise>
+						<a href="<c:url value='?action=${actRep}&command=${commUnFollow}&id=${report.employee.id}' />">フォロー解除する</a>
+					</c:otherwise>
+				</c:choose>
 			</c:otherwise>
 		</c:choose>
 		<p>
