@@ -135,5 +135,5 @@ public interface JpaConst {
 
 	//従業員のフォロー状態を解除する
 	String Q_TIME_LINE_UNFOLLOW = "unFollow";
-	String Q_TIME_LINE_UNFOLLOW_DEF = "DELETE FROM TimeLine AS tl WHERE tl.loginEmployee = :" + JPQL_PARM_LOGIN_EMPLOYEE + " AND tl.followEmployee = :" + JPQL_PARM_FOLLOW_EMPLOYEE;
+	String Q_TIME_LINE_UNFOLLOW_DEF = "SELECT tl FROM TimeLine AS tl WHERE tl.loginEmployee = :" + JPQL_PARM_LOGIN_EMPLOYEE + " AND tl.followEmployee = :" + JPQL_PARM_FOLLOW_EMPLOYEE;
 }

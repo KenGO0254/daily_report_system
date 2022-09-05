@@ -13,14 +13,14 @@ import constants.JpaConst;
 import models.Report;
 import models.TimeLine;
 
-public class TimeLineService extends ServiceBase{
+public class TimeLineService extends ServiceBase {
 	/**
 	 * ログイン中の従業員がフォローした従業員が作成した日報データを、指定されたページ数の一覧画面に表示する分取得しReportViewのリストで返却する
 	 * @param loginEmployee
 	 * @param page ページ数
 	 * @return 一覧画面に表示するデータのリスト
 	 */
-	public List<ReportView> getFollowPerPage(EmployeeView loginEmployee, int page){
+	public List<ReportView> getFollowPerPage(EmployeeView loginEmployee, int page) {
 		List<Report> reports = em.createNamedQuery(JpaConst.Q_TIME_LINE_GET_FOLLOW_REP, Report.class)
 				.setParameter(JpaConst.JPQL_PARM_EMPLOYEE, EmployeeConverter.toModel(loginEmployee))
 				.setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
@@ -36,7 +36,7 @@ public class TimeLineService extends ServiceBase{
 	 * @return 日報データの件数
 	 */
 	public long countFollowRep(EmployeeView employee) {
-		long count = (long)em.createNamedQuery(JpaConst.Q_TIME_LINE_COUNT_FOLLOW_REP, Long.class)
+		long count = (long) em.createNamedQuery(JpaConst.Q_TIME_LINE_COUNT_FOLLOW_REP, Long.class)
 				.setParameter(JpaConst.JPQL_PARM_EMPLOYEE, EmployeeConverter.toModel(employee))
 				.getSingleResult();
 
@@ -57,9 +57,15 @@ public class TimeLineService extends ServiceBase{
 	}
 
 	public void unFollowEmp(EmployeeView loginEmployee, EmployeeView followEmployee) {
-		em.createNamedQuery(JpaConst.Q_TIME_LINE_UNFOLLOW, TimeLine.class)
-		.setParameter(JpaConst.JPQL_PARM_LOGIN_EMPLOYEE, loginEmployee)
-		.setParameter(JpaConst.JPQL_PARM_FOLLOW_EMPLOYEE, followEmployee);
+		TimeLine tl = em.createNamedQuery(JpaConst.Q_TIME_LINE_UNFOLLOW, TimeLine.class)
+				.setParameter(JpaConst.JPQL_PARM_LOGIN_EMPLOYEE, EmployeeConverter.toModel(loginEmployee))
+				.setParameter(JpaConst.JPQL_PARM_FOLLOW_EMPLOYEE, EmployeeConverter.toModel(followEmployee))
+				.getSingleResult();
+
+		em.getTransaction().begin();
+		em.remove(tl);
+		em.getTransaction().commit();
+		em.close();
 	}
 
 	/**

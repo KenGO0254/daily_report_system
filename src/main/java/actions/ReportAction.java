@@ -319,7 +319,7 @@ public class ReportAction extends ActionBase {
 		timeLineService.create(loginEmployee, followEmployee);
 
 		//セッションスコープにフラッシュメッセージを設定
-		putSessionScope(AttributeConst.FLUSH, MessageConst.I_FOLLOW);
+		putSessionScope(AttributeConst.FLUSH, MessageConst.I_FOLLOW.getMessage());
 
 		//タイムラインページを表示
 		redirect(ForwardConst.ACT_REP, ForwardConst.CMD_TIME_LINE);
@@ -339,7 +339,7 @@ public class ReportAction extends ActionBase {
 		timeLineService.unFollowEmp(loginEmployee, followEmployee);
 
 		//セッションスコープにフラッシュメッセージを設定
-		putSessionScope(AttributeConst.FLUSH, MessageConst.I_UNFOLLOW);
+		putSessionScope(AttributeConst.FLUSH, MessageConst.I_UNFOLLOW.getMessage());
 
 		//タイムラインページに遷移
 		redirect(ForwardConst.ACT_REP, ForwardConst.CMD_TIME_LINE);
