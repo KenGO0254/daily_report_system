@@ -65,6 +65,23 @@ public class LikeService extends ServiceBase {
 	}
 
 	/**
+	 * 「いいねを解除する」リンクが押された時に従業員のidと日報のidを元にしていいね状態を解除する
+	 * @param employee ログイン中の従業員
+	 * @param report いいねした日報
+	 */
+	public void unLikeRep(EmployeeView employee, int reportId) {
+		Like l = em.createNamedQuery(JpaConst.Q_LIKE_COUNT_GET_REP_EMP, Like.class)
+				.setParameter(JpaConst.JPQL_PARM_REPORT_ID, reportId)
+				.setParameter(JpaConst.JPQL_PARM_EMPLOYEE, EmployeeConverter.toModel(employee))
+				.getSingleResult();
+
+		em.getTransaction().begin();
+		em.remove(l);
+		em.getTransaction().commit();
+		em.close();
+	}
+
+	/**
 	 * 「この日報にいいねする」リンクが押された時に従業員のidと日報のidを元にデータを1件作成し、いいねした人一覧に登録する
 	 * @param lv いいねした人一覧への登録内容
 	 */

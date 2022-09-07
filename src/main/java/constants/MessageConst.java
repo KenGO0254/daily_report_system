@@ -6,7 +6,8 @@ public enum MessageConst {
 	I_LOGINED("ログインしました。"), E_LOGINED("ログインに失敗しました。"), I_LOGOUT("ログアウトしました。"),
 
 	//DB更新
-	I_REGISTERED("登録が完了しました。"), I_UPDATED("更新が完了しました。"), I_DELETED("削除が完了しました。"), I_LIKE_COUNT("いいねしました。"),
+	I_REGISTERED("登録が完了しました。"), I_UPDATED("更新が完了しました。"), I_DELETED("削除が完了しました。"),
+	I_LIKE_COUNT("いいねしました。"), I_UNLIKE("いいねを解除しました。"),
 	I_FOLLOW("フォローしました。"), I_UNFOLLOW("フォロー解除しました。"),
 
 	//バリデーション

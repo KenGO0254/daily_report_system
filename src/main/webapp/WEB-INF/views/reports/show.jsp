@@ -7,6 +7,7 @@
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commEdt" value="${ForwardConst.CMD_EDIT.getValue()}" />
 <c:set var="commLkCnt" value="${ForwardConst.CMD_LIKE_COUNT.getValue()}" />
+<c:set var="commUnLk" value="${ForwardConst.CMD_UNLIKE.getValue()}" />
 <c:set var="commFollow" value="${ForwardConst.CMD_FOLLOW.getValue()}" />
 <c:set var="commUnFollow" value="${ForwardConst.CMD_UNFOLLOW.getValue()}" />
 
@@ -53,9 +54,14 @@
 				</p>
 			</c:when>
 			<c:otherwise>
-				<c:if test="${likes_count == 0}">
-					<a href="<c:url value='?action=${actRep}&command=${commLkCnt}&id=${report.id}' />">この日報にいいねする</a><br />
-				</c:if>
+				<c:choose>
+					<c:when test="${likes_count == 0}">
+						<a href="<c:url value='?action=${actRep}&command=${commLkCnt}&id=${report.id}' />">この日報にいいねする</a><br />
+					</c:when>
+					<c:otherwise>
+						<a href="<c:url value='?action=${actRep}&command=${commUnLk}&id=${report.id}' />">いいねを解除する</a><br />
+					</c:otherwise>
+				</c:choose>
 				<c:choose>
 					<c:when test="${follows_count == 0}">
 						<a href="<c:url value='?action=${actRep}&command=${commFollow}&id=${report.employee.id}' />">この日報の作成者をフォローする</a>

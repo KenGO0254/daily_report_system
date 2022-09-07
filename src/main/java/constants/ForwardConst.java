@@ -25,6 +25,7 @@ public enum ForwardConst {
 	CMD_DESTROY("destroy"),
 	CMD_LIKE_COUNT("likeCount"),
 	CMD_LIKES("likes"),
+	CMD_UNLIKE("unLike"),
 	CMD_FOLLOW("followEmp"),
 	CMD_TIME_LINE("timeLine"),
 	CMD_UNFOLLOW("unFollow"),

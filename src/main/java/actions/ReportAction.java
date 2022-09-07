@@ -305,6 +305,29 @@ public class ReportAction extends ActionBase {
 		forward(ForwardConst.FW_LIKE_INDEX);
 	}
 
+	public void unLike() throws ServletException, IOException {
+		//ログイン中の従業員データを取得
+		EmployeeView loginEmployee = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
+
+		//いいね状態を解除する
+		likeService.unLikeRep(loginEmployee, toNumber(getRequestParam(AttributeConst.REP_ID)));
+
+		//idを条件に日報データを取得する
+		ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
+
+		//いいね数を１減らす
+		rv.setLikeCount(rv.getLikeCount() - 1);
+
+		//日報情報を更新する
+		service.update(rv);
+
+		//セッションスコープにフラッシュメッセージを設定
+		putSessionScope(AttributeConst.FLUSH, MessageConst.I_UNLIKE.getMessage());
+
+		//日報一覧にリダイレクト
+		redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
+	}
+
 	/**
 	 * 従業員をフォローする
 	 */
@@ -366,7 +389,7 @@ public class ReportAction extends ActionBase {
 
 		//フラッシュメッセージをリクエストスコープに移して削除
 		String flush = getSessionScope(AttributeConst.FLUSH);
-		if(flush != null) {
+		if (flush != null) {
 			putRequestScope(AttributeConst.FLUSH, flush);
 			removeSessionScope(AttributeConst.FLUSH);
 		}

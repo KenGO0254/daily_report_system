@@ -29,7 +29,10 @@ import lombok.Setter;
 				query = JpaConst.Q_LIKE_COUNT_ALL_LIKE_DEF),
 		@NamedQuery(
 				name = JpaConst.Q_LIKE_COUNT_MATCH_ID,
-				query = JpaConst.Q_LIKE_COUNT_MATCH_ID_DEF)
+				query = JpaConst.Q_LIKE_COUNT_MATCH_ID_DEF),
+		@NamedQuery(
+				name = JpaConst.Q_LIKE_COUNT_GET_REP_EMP,
+				query = JpaConst.Q_LIKE_COUNT_GET_REP_EMP_DEF)
 })
 @Entity
 @Getter
